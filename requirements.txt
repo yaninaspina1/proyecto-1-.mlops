@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+
+>>>>>>> 52a869aa8e5808d0721cf5b0a2918a3042c44bc6
 annotated-types==0.7.0
 anyio==4.8.0
 certifi==2025.1.31
@@ -17,5 +21,24 @@ six==1.17.0
 sniffio==1.3.1
 starlette==0.45.3
 typing_extensions==4.12.2
+<<<<<<< HEAD
 tzdata==2025.1
 urllib3==2.3.0
+=======
+
+
+certifi==2025.1.31
+charset-normalizer==3.4.1
+idna==3.10
+requests==2.32.3
+urllib3==2.3.0
+
+
+
+
+
+
+
+
+
+>>>>>>> 52a869aa8e5808d0721cf5b0a2918a3042c44bc6

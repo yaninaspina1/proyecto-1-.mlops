@@ -2,7 +2,7 @@ from fastapi import FastAPI, HTTPException
 import pandas as pd
 
 # Cargar dataset (debes reemplazar con la ruta de tu archivo CSV)
-df = pd.read_csv("C:\\Users\\yanin\\OneDrive\\Desktop\\proyecto 1\\archivos\\movies_dataset_modificado.csv")
+df = pd.read_csv("C:\\https://github.com/yaninaspina1/proyecto-1-.mlops/blob/main/archivos/movies_dataset_modificado.csv")
 
 app = FastAPI()
 

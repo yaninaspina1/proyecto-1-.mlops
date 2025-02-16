@@ -1,1 +1,2 @@
-gunicorn==<versión_deseada>  # Por ejemplo, gunicorn==20.1.0
+gunicorn==20.1.0
+

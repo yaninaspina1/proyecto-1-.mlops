@@ -3,7 +3,13 @@ from fastapi import FastAPI, HTTPException
 import pandas as pd
 
 
+
+
+
 app = FastAPI()
+@app.head("/")
+async def read_root():
+    return {}
 @app.get("/")
 def read_root():
     return {"mensaje": "¡Bienvenido a mi aplicación FastAPI!"}

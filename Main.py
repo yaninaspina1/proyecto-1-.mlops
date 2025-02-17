@@ -1,6 +1,5 @@
 from fastapi import FastAPI, HTTPException
 import pandas as pd
-from mi_aplicacion import app
 
 # Cargar dataset (debes reemplazar con la ruta de tu archivo CSV)
 df = pd.read_csv("C:\\Users\\yanin\\OneDrive\\Desktop\\proyecto 1\\archivos\\movies_dataset_modificado.csv")

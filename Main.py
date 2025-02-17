@@ -41,8 +41,12 @@ def votos_titulo(titulo: str):
 
 @app.get("/cantidad_filmaciones_dia/{dia}")
 def cantidad_filmaciones_dia(dia: str):
-    dias = {'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado', 'domingo'}
-    
+    # Mapeo de días en español a índices de pandas (lunes = 0, domingo = 6)
+    dias = {
+        'lunes': 0, 'martes': 1, 'miércoles': 2, 'jueves': 3,
+        'viernes': 4, 'sábado': 5, 'domingo': 6
+    }
+
     dia = dia.lower()
     if dia not in dias:
         raise HTTPException(status_code=400, detail="Día no válido.")
@@ -54,10 +58,13 @@ def cantidad_filmaciones_dia(dia: str):
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error al cargar el archivo: {str(e)}")
 
+    # Convertir la fecha a formato datetime
     df['release_date'] = pd.to_datetime(df['release_date'], errors='coerce')
-    cantidad = df[df['release_date'].dt.day_name(locale='es_ES').str.lower() == dia].shape[0]
 
-    return {"mensaje": f"{cantidad} películas fueron estrenadas en los días {dia}"}
+    # Filtrar por el día de la semana usando el índice numérico
+    cantidad = df[df['release_date'].dt.weekday == dias[dia]].shape[0]
+
+    return {"mensaje": f"{cantidad} películas fueron estrenadas en {dia}"}
 
 @app.get("/cantidad_filmaciones_mes/{mes}")
 def cantidad_filmaciones_mes(mes: str):

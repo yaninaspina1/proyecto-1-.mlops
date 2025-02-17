@@ -1,8 +1,7 @@
+
 from fastapi import FastAPI, HTTPException
 import pandas as pd
 
-# Cargar dataset (debes reemplazar con la ruta de tu archivo CSV)
-df = pd.read_csv("C:\\Users\\yanin\\OneDrive\\Desktop\\proyecto 1\\archivos\\movies_dataset_modificado.csv")
 
 app = FastAPI()
 
@@ -22,6 +21,7 @@ def cantidad_filmaciones_mes(mes: str):
         raise HTTPException(status_code=400, detail="Mes no válido.")
     
     mes_num = meses[mes]
+    df = pd.read_csv("C:\\Users\\yanin\\OneDrive\\Desktop\\Nueva carpeta\\archivos\\movies_release_date.csv")
     df['release_date'] = pd.to_datetime(df['release_date'], errors='coerce')
     cantidad = df[df['release_date'].dt.month == mes_num].shape[0]
     return {"mensaje": f"{cantidad} cantidad de películas fueron estrenadas en el mes de {mes}"}
@@ -32,12 +32,14 @@ def cantidad_filmaciones_dia(dia: str):
     if dia not in dias:
         raise HTTPException(status_code=400, detail="Día no válido.")
     
+    df = pd.read_csv("C:\\Users\\yanin\\OneDrive\\Desktop\\Nueva carpeta\\archivos\\movies_release_date.csv")
     df['release_date'] = pd.to_datetime(df['release_date'], errors='coerce')
     cantidad = df[df['release_date'].dt.day_name(locale='es_ES').str.lower() == dia].shape[0]
     return {"mensaje": f"{cantidad} cantidad de películas fueron estrenadas en los días {dia}"}
 
 @app.get("/score_titulo/{titulo}")
 def score_titulo(titulo: str):
+    df = pd.read_csv("C:\\Users\\yanin\\OneDrive\\Desktop\\Nueva carpeta\\archivos\\movies_score.csv")
     film = df[df['title'].str.lower() == titulo.lower()]
     if film.empty:
         raise HTTPException(status_code=404, detail="Película no encontrada.")
@@ -49,6 +51,7 @@ def score_titulo(titulo: str):
 
 @app.get("/votos_titulo/{titulo}")
 def votos_titulo(titulo: str):
+    df = pd.read_csv("C:\\Users\\yanin\\OneDrive\\Desktop\\Nueva carpeta\\archivos\\movies_votes.csv")
     film = df[df['title'].str.lower() == titulo.lower()]
     if film.empty:
         raise HTTPException(status_code=404, detail="Película no encontrada.")
@@ -64,16 +67,3 @@ def votos_titulo(titulo: str):
                    f"La misma cuenta con un total de {votos} valoraciones, con un promedio de {promedio}."
     }
 
-@app.get("/get_actor/{nombre_actor}")
-def get_actor(nombre_actor: str):
-    actor_data = df[df['cast'].str.contains(nombre_actor, na=False, case=False)]
-    if actor_data.empty:
-        raise HTTPException(status_code=404, detail="Actor no encontrado.")
-    
-    cantidad = actor_data.shape[0]
-    retorno_total = actor_data['return'].sum()
-    promedio_retorno = retorno_total / cantidad
-    return {
-        "mensaje": f"El actor {nombre_actor} ha participado de {cantidad} cantidad de filmaciones, "
-                   f"el mismo ha conseguido un retorno de {retorno_total} con un promedio de {promedio_retorno} por filmación."
-    }

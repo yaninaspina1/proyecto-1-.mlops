@@ -4,6 +4,9 @@ import pandas as pd
 
 
 app = FastAPI()
+@app.get("/")
+def read_root():
+    return {"mensaje": "¡Bienvenido a mi aplicación FastAPI!"}
 
 # Función para convertir el mes y el día a español
 meses = {

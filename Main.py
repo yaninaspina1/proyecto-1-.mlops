@@ -9,7 +9,7 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 VOTES_CSV = os.path.join(BASE_DIR, "archivos", "movies_votes.csv")
 RELEASE_DATE_CSV = os.path.join(BASE_DIR, "archivos", "movies_release_date.csv")
 SCORE_CSV = os.path.join(BASE_DIR, "archivos", "movies_score.csv")
-
+RELEASE_DATE_CSV = os.path.join(BASE_DIR, "archivos", "movies_release_date.csv")
 @app.get("/")
 def read_root():
     return {"mensaje": "¡Bienvenido a mi aplicación FastAPI!"}

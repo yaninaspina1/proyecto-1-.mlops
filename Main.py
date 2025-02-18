@@ -17,7 +17,9 @@ RECOMMENDATION_CSV = os.path.join(BASE_DIR, "archivos", "recomendacion_api.csv")
 try:
     df_recommendation = pd.read_csv(RECOMMENDATION_CSV)
 
-    df_recommendation["id"] = df_recommendation["id"].astype(str)
+    df_recommendation["id"] = df_recommendation["id"].astype(str
+                                                            
+    df_recommendation = df_recommendation.dropna(subset=["title"])
 
     # Procesar características para recomendaciones
     df_recommendation["combined_features"] = df_recommendation["title"].fillna("")

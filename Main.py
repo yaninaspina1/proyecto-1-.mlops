@@ -78,12 +78,17 @@ def get_recommendations(request: RecommendationRequest):
 @app.get("/recomendacion/{titulo}")
 def recomendacion(titulo: str):
     try:
+        titulo = titulo.lower()
+        df_recommendation["title"] = df_recommendation["title"].str.lower()
+
         if titulo not in df_recommendation["title"].values:
             raise HTTPException(status_code=404, detail=f"La película '{titulo}' no se encontró en la base de datos.")
+        
         idx = df_recommendation[df_recommendation["title"] == titulo].index[0]
         distances, indices = nn.kneighbors(final_features[idx], n_neighbors=6)
         recommended_titles = df_recommendation.iloc[indices[0]]['title'].tolist()
         recommended_titles = [t for t in recommended_titles if t != titulo]
+
         return {"recomendaciones": recommended_titles[:5]}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error interno del servidor: {str(e)}")

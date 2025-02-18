@@ -6,6 +6,8 @@ from sklearn.neighbors import NearestNeighbors
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.preprocessing import MinMaxScaler
 from scipy.sparse import csr_matrix, hstack
+import logging
+logging.basicConfig(level=logging.INFO)
 
 app = FastAPI()
 
@@ -60,9 +62,11 @@ class RecommendationRequest(BaseModel):
 @app.get("/")
 def read_root():
     return {"mensaje": "¡Bienvenido a la API de películas!"}
-
+    
 @app.post("/recommendations/")
 def get_recommendations(request: RecommendationRequest):
+   
+    logging.info(f"Solicitud recibida con título: {request.title} y n: {request.n}")
     try:
         if request.title not in df_recommendation["title"].values:
             raise HTTPException(status_code=404, detail=f"La película '{request.title}' no se encontró en la base de datos.")
